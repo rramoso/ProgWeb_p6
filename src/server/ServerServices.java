@@ -59,18 +59,18 @@ public class ServerServices {
         return new ArrayList<Estudiante>(studentsMap.values());
     }
 
-    private static void populateSubjects() {
+    private static void createSubjects() {
 
-        subjects.add(new Asignatura("ISC-573", "Tecnologias Emergentes"));
-        subjects.add(new Asignatura("ISC-581", "Temas Especiales ISC"));
-        subjects.add(new Asignatura("ISC-415", "Programacion Web"));
-        subjects.add(new Asignatura("ISC-517", "Programacion Web Avanzada"));
-        subjects.add(new Asignatura("ISC-571", "Proyecto Final"));
+        subjects.add(new Asignatura("ISC-436", "Aseguramiento Calidad del Software"));
+        subjects.add(new Asignatura("ILE-498", "Ingles para Ingenieros"));
+        subjects.add(new Asignatura("ISC-317", "Programacion Logica"));
+        subjects.add(new Asignatura("ISC-446", "Mineria de Datos"));
+        subjects.add(new Asignatura("ITT-325", "Redes de datos II"));
 
     }
 
     public static void main(String[] argv) {
-        populateSubjects();
+        createSubjects();
         Object implementor = new ServerServices();
         String address = "http://localhost:8080/ServerService";
         Endpoint.publish(address, implementor);
