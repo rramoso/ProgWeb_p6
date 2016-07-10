@@ -7,59 +7,60 @@ url = 'http://localhost:8080/ServerService?wsdl'
 client = Client(url)
 
 def printMenu():
-    print 'Cliente SOAP WebService'
+    print 'SOAP Client Side'
+    print 'Students Management'
     print '=======================\n'
 
-    print 'Opciones:'
-    print '1: Crear Estudiante'
-    print '2: Obtener Estudiante'
-    print '3: Actualizar Estudiante'
-    print '4: Borrar Estudiante'
-    print '5: Lista de Estudiantes'
-    print '0: Cerrar Cliente'
+    print 'Menu:'
+    print '1: Create'
+    print '2: Search'
+    print '3: Update'
+    print '4: Delete'
+    print '5: Read'
+    print '0: Exit'
 
 def createStudentOnServer():
     os.system('clear')
-    print 'Creando nuevo Estudiante:\n'
-    studentId = raw_input('Matricula => ')
-    name = raw_input('Nombre => ')
-    career = raw_input('Carrera => ')
+    print 'Creating new student...:\n'
+    studentId = raw_input('Student ID => ')
+    name = raw_input('Name => ')
+    career = raw_input('Career => ')
 
-    print('\nAsignaturas disponibles:')
+    print('\nAvaiable Subjects:')
     subjects = client.service.listAsignatura()
     for i, subject in enumerate(subjects):
         print '{}: {}'.format(i, subject.name)
 
-    subjectsString = raw_input('Ingrese los codigos de asignaturas a la que pertenece este estudiante => ')
+    subjectsString = raw_input('Type the code of the subject => ')
     subArray = subjectsString.split(',')
     studentSubjects = []
     for sub in subArray:
         studentSubjects.append(subjects[int(sub)])
 
     client.service.crearEstudiante(studentId, name, career, studentSubjects)
-    raw_input('Estudiante creado con exito! Presione ENTER para volver al menu.')
+    raw_input('Student saved. Press ENTER for menu')
 
 def getStudentFromServer():
     os.system('clear')
-    studentId = raw_input('Ingrese la matricula del estudiante que desea => ')
+    studentId = raw_input('Enter the student ID you would like to search => ')
     student = client.service.getEstudiante(studentId)
 
     print student
 
-    raw_input('Presione ENTER para volver al menu.')
+    raw_input('Press ENTER for menu')
 
 def updateStudentOnServer():
     os.system('clear')
-    studentId = raw_input('Ingrese la matricula del estudiante que desea actualizar => ')
+    studentId = raw_input('Enter the student ID you would like to update => ')
     student = client.service.getEstudiante(studentId)
-    student.name = raw_input('Ingrese el nombre del Estudiante => ')
-    student.career = raw_input('Ingrese la carrera del Estudiante => ')
-    print('\nAsignaturas disponibles:')
-    subjects = client.service.listarAsignaturas()
+    student.name = raw_input('Name => ')
+    student.career = raw_input('Career => ')
+    print('\nAvaiable Subjects:')
+    subjects = client.service.listAsignatura()
     for i, subject in enumerate(subjects):
         print '{}: {}'.format(i, subject.name)
 
-    subjectsString = raw_input('Ingrese los codigos de asignaturas a la que pertenece este estudiante => ')
+    subjectsString = raw_input('Type the code of the subject: => ')
     subArray = subjectsString.split(',')
     studentSubjects = []
     for sub in subArray:
@@ -69,29 +70,29 @@ def updateStudentOnServer():
 
     client.service.updateEstudiante(student)
 
-    raw_input('Estudiante actualizado con exito! Presione ENTER para volver al menu.')
+    raw_input('Student updated. Press ENTER for menu')
 
 def removeStudentFromServer():
     os.system('clear')
-    studentId = raw_input('Ingrese la matricula del estudiante que desea eliminar => ')
+    studentId = raw_input('Enter the student  ID you would like to delete => ')
     client.service.removeEstudiante(studentId)
 
-    raw_input('Estudiante eliminado con exito! Presione ENTER para volver al menu.')
+    raw_input('Student deleted. Press ENTER for menu')
 
 def listAllStudents():
     os.system('clear')
-    print 'Lista de Estudiantes:\n'
+    print 'Students list\n'
     students = client.service.listEstudiantes()
     for student in students:
         print student
 
-    raw_input('Presione ENTER para volver al menu.')
+    raw_input('Press ENTER for menu.')
 
 def main():
     while True:
         os.system('clear')
         printMenu()
-        select = raw_input('\nDigite una de las opciones => ')
+        select = raw_input('\nEnter the option => ')
         if select == '1':
             createStudentOnServer()
         if select == '2':
@@ -102,8 +103,8 @@ def main():
             removeStudentFromServer()
         if select == '5':
             listAllStudents()
-        if select == '0:
-            print '\nGracias por utilizar el Cliente SOAP!'
+        if select == '0':
+            print '\nClient closed'
             break
 
 if __name__ == '__main__':
